@@ -1,0 +1,6 @@
+{
+  "meteor": {
+    "git": "https://github.com/timhaines/meteor.git",
+    "branch": "extract-service-packages-from-accounts-packages"
+  }
+}
