@@ -11,8 +11,12 @@ if (Meteor.isClient) {
           console.log('Error:' + tokenOrError);
         } else {
           Meteor.call('retrieveTwitterCredential', tokenOrError, function(error, result) {
-            console.log('DEMO ONLY - DON\'T send unfiltered credentials to the client on a production app');
-            console.log('Result:', result);
+            if(error)
+              console.log(error.reason);
+            else {
+              console.log('DEMO ONLY - DON\'T send unfiltered credentials to the client on a production app');
+              console.log('Result:', result);
+            }
           });
         }
       });
@@ -23,8 +27,12 @@ if (Meteor.isClient) {
           console.log('Error:' + tokenOrError);
         } else {
           Meteor.call('retrieveFacebookCredential', tokenOrError, function(error, result) {
-            console.log('DEMO ONLY - DON\'T send unfiltered credentials to the client on a production app');
-            console.log('Result:', result);
+            if(error)
+              console.log('Error: ' + error.reason);
+            else {
+              console.log('DEMO ONLY - DON\'T send unfiltered credentials to the client on a production app');
+              console.log('Result:', result);
+            }
           });
         }
       });
@@ -39,10 +47,18 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     retrieveTwitterCredential: function(token) {
-      return Twitter.retrieveCredential(token);
+      credential = Twitter.retrieveCredential(token);
+      if(credential instanceof Error)
+        throw new Meteor.Error(500, credential.message);
+      else
+        return credential;
     },
     retrieveFacebookCredential: function(token) {
-      return Facebook.retrieveCredential(token);
+      credential = Facebook.retrieveCredential(token);
+      if(credential instanceof Error)
+        throw new Meteor.Error(500, credential.message);
+      else
+        return credential;
     }
   })
 }

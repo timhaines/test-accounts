@@ -6,10 +6,15 @@
 autopublish
 insecure
 preserve-inputs
+accounts-ui
+
 accounts-twitter
 accounts-github
-accounts-ui
 accounts-facebook
 accounts-google
 accounts-meetup
 accounts-weibo
+accounts-password
+
+twitter
+facebook
